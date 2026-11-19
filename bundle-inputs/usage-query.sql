@@ -1,0 +1,12 @@
+-- Usage rows for the build (1410c615), fix (ca2f8dcf) and fix2 (50b3bcbc)
+-- subagent sessions of news-image-20261119. Rows appear only AFTER each
+-- session ends. Each of these three sessions has exactly one row in
+-- agent.agent_message_token_usage (its final message's usage).
+-- Parent session 4992ce22-9274-420d-b821-0c10890d6f40 (this build chat) is
+-- NOT bundled as a working session: it did the research/cross-checks and
+-- orchestration, but wrote no entry code. It goes in only as the parent
+-- chat link (--parent-session), per the 2026-11-18 12:00 UTC parent-chain
+-- rule: it is the session where the user typed the prompt "시작해줘".
+-- The 6 egm-review sessions only read the entry and wrote no entry code;
+-- they are not bundled (only sessions that worked on the entry are).
+SELECT u.agent_id AS agent_id, u.message_id AS message_id, u.input_tokens AS input_tokens, u.output_tokens AS output_tokens, u.created_at AS created_at FROM agent.agent_message_token_usage u WHERE u.agent_id IN ('1410c615-2f18-4942-a2c6-75a44664d973', 'ca2f8dcf-2ff2-4eca-8d54-abf0d472cfd5', '50b3bcbc-9afd-470f-b7ef-eb1e3a41735f') ORDER BY u.created_at ASC
